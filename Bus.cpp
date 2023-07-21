@@ -1,10 +1,10 @@
-Bus::tx(Packet p) {
-    for (int i=0;i<node.Lenght;i++) {
-        if(rnd()>RXERROR) node[i].rx(p);
-    }
-}
+#include "Bus.h"
+#include "Packet.h"
 
-class Bus {
-    // create a list of integer type
-    list<Node> node;
+void Bus::send(Packet& p)
+{
+    for(int i=0;i<nodes.size();i++)
+    {
+        nodes[i].rx(p);
+    }
 }
