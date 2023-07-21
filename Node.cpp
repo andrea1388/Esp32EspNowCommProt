@@ -4,7 +4,7 @@
 #include <time.h>
 #include <stdlib.h>
 #define MAXDELAY 100
-#define TX1 2000
+#define TX1 60000
 using namespace std;
 extern uint32_t now();
 
@@ -31,7 +31,7 @@ void Node::sendtemp(int payload)
     packetstosend.push_back(p);
     p.txtime=now()+TX1+randomDelayInMs();
     p.retransmission=1;
-    packetstosend.push_back(p);
+    //packetstosend.push_back(p);
     printpacketstosend();
 }
 
@@ -51,21 +51,26 @@ void Node::sendPackets() {
         packetstosend.erase(packetstosend[i]);
     } */
 
-    for (vector<Packet>::iterator it = packetstosend.begin(); it != packetstosend.end(); ++it) 
+    //for (vector<Packet>::iterator it = packetstosend.begin(); it != packetstosend.end(); ++it)
+    vector<Packet>::iterator it=packetstosend.begin();
+    while(it != packetstosend.end())
     {
-        if(now()>it->txtime)
+        if(now() > it->txtime)
         {
-            for(int i=0;i<bus->nodes.size();i++)
+            for(Node n: bus->nodes)
             {
-                if(i!=id) bus->nodes[i].rx(*it);
+                if(n.id!=id) n.rx(*it);
             }
             packetstosend.erase(it);
         }
     }
+    printpacketreceived();
+    printpacketstosend();
 }
     
 void Node::rx(const Packet& pr)
 {
+    printf("RX node: %u, packet#: %u, from: %u, retrans: %u\n",id,pr.number,pr.sender,pr.retransmission);
     for (int i=0;i<receivedpackets.size();i++) {
         Packet p=receivedpackets[i];
         if( pr.sender==p.sender && pr.number==p.number && pr.retransmission==p.retransmission) return;
