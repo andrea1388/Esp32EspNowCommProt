@@ -31,7 +31,7 @@ void Node::sendtemp(int payload)
     packetstosend.push_back(p);
     p.txtime=now()+TX1+randomDelayInMs();
     p.retransmission=1;
-    //packetstosend.push_back(p);
+    packetstosend.push_back(p);
     printpacketstosend();
 }
 
@@ -52,39 +52,57 @@ void Node::sendPackets() {
     } */
 
     //for (vector<Packet>::iterator it = packetstosend.begin(); it != packetstosend.end(); ++it)
+    printf("\nNode: %u sendpackets\n",id);
+    printpacketstosend();
+
     vector<Packet>::iterator it=packetstosend.begin();
     while(it != packetstosend.end())
     {
-        if(now() > it->txtime)
+        uint32_t n;
+        n=now();
+        if(n > it->txtime)
         {
-            for(Node n: bus->nodes)
+            for (std::vector<Node>::iterator nit = bus->nodes.begin(); nit != bus->nodes.end(); ++nit)
             {
+                Node& n = *nit;
                 if(n.id!=id) n.rx(*it);
             }
+            printf("\nNode: %u sent packet %d %d %d\n",id,it->sender,it->number,it->retransmission);
             packetstosend.erase(it);
+            return;
         }
+        it++;
     }
-    printpacketreceived();
-    printpacketstosend();
 }
     
 void Node::rx(const Packet& pr)
 {
-    printf("RX node: %u, packet#: %u, from: %u, retrans: %u\n",id,pr.number,pr.sender,pr.retransmission);
+    printf("\nNode: %u received packet#: %u, from: %u, retrans: %u\n",id,pr.number,pr.sender,pr.retransmission);
+    
+    if(pr.sender==id) {printf("from me. discarded\n"); return;}
+    
     for (int i=0;i<receivedpackets.size();i++) {
         Packet p=receivedpackets[i];
-        if( pr.sender==p.sender && pr.number==p.number && pr.retransmission==p.retransmission) return;
+        if( pr.sender==p.sender && pr.number==p.number && pr.retransmission==p.retransmission) {
+                printf("already received. discarded\n");
+                return;
+            }
     }
 
     packetstosend.push_back(pr);
-    
+    printf("added to outgoing list\n");
+
     bool inlist=false;
     for (int i=0;i<receivedpackets.size();i++) {
         Packet p=receivedpackets[i];
         if(pr.sender==p.sender && pr.number==p.number) inlist=true;
     }
-    if(!inlist) process(pr);
+    if(!inlist) {
+        process(pr);
+    }
+
     receivedpackets.push_back(pr);
+    printf("added to received list\n");
     printpacketreceived();
     printpacketstosend();
 }

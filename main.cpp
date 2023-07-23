@@ -12,6 +12,7 @@
 #define RXERROR 0.5
 #include<list>
 #include<vector>
+#include <unistd.h>
 #include "Bus.h"
 #include "Node.h"
 #include "Packet.h"
@@ -26,16 +27,19 @@ int main(int argc, const char * argv[]) {
     
     
     for (int i=0;i<NUMNODE;i++) {
-        bus.nodes.push_back(Node(i,&bus));
+        bus.nodes.push_back(*new Node(i,&bus));
         //nodelist.push_back(new Node(i,bus)); //node id, bus
     }
 
     bus.nodes[0].sendtemp(3);
+    bus.nodes[0].sendPackets();
+    bus.nodes[1].sendPackets();
+    
     while(true) {
         for (int i=0;i<NUMNODE;i++) {
             bus.nodes[i].sendPackets();
         }
-        
+        sleep(1);
     }
     return 0;
 }

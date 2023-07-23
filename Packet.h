@@ -14,7 +14,7 @@ class Packet {
 public:
     int sender;
     int number;
-    int txtime;
+    uint32_t txtime;
     int retransmission;
     int payload;
 };
