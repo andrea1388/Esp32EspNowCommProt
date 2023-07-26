@@ -8,15 +8,16 @@
 
 #ifndef Packet_h
 #define Packet_h
-
+#include "Msg.h"
 
 class Packet {
 public:
-    int sender;
-    int number;
+    uint8_t sender;
+    uint8_t number;
     uint32_t txtime;
-    int retransmission;
-    int payload;
+    uint8_t retransmission;
+    Msg msg;
+    uint16_t crc;
 };
 
 #endif /* Packet_h */

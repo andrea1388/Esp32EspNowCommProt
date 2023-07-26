@@ -10,8 +10,8 @@
 #define NUMNODE 3
 #define TXRNDTIME 10 //ms
 #define RXERROR 0.5
-#include<list>
-#include<vector>
+#include <list>
+#include <vector>
 #include <unistd.h>
 #include "Bus.h"
 #include "Node.h"

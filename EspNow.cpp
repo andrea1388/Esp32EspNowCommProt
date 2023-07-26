@@ -1,7 +1,18 @@
-class EspNow
+#include "EspNow.h"
+#include "Msg.h"
+
+void EspNow::begin()
 {
-    public:
-        begin();
-        void cbNewPacket(void cbrx(const Packet& pkt));
-        void tx(Packet);
+}
+
+void EspNow::cbNewPacket(void cbrx(const Msg &msg))
+{
+}
+
+void EspNow::tx(const Msg &msg)
+{
+    Packet p;
+    p.setMsg(msg);
+    packetstosend.push_back(std::move(p));
+    
 }
