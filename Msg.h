@@ -1,6 +1,8 @@
-struct Msg 
+class Msg 
 {
-    byte cmd;
-    byte len;
-    byte *data;
+    public:
+        byte cmd;
+        byte len;
+        byte *data;
+        setMsg(uint8_t cmd,uint8_t datalen, const void*data);
 }

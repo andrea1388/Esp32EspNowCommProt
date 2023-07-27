@@ -18,6 +18,7 @@ public:
     uint8_t retransmission;
     Msg msg;
     uint16_t crc;
+    setMsg(Msg&);
 };
 
 #endif /* Packet_h */

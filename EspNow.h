@@ -6,10 +6,12 @@ using namespace std;
 class EspNow
 {
     public:
-        void begin();
+        void begin(uint8_t);
         void cbNewPacket(void cbrx(const Msg& msg));
-        void tx(const Msg& msg);
+        bool tx(const Msg& msg);
     private:
+        uint8_t nodeid; // node address
+        uint8_t pktnumber=0; // pkt sequence number
         vector<Packet> packetstosend;
         vector<Packet> receivedpackets;
 };
