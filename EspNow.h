@@ -9,6 +9,7 @@ class EspNow
         void begin(uint8_t);
         void cbNewPacket(void cbrx(const Msg& msg));
         bool tx(const Msg& msg);
+        void txPanelTemp(float);
     private:
         uint8_t nodeid; // node address
         uint8_t pktnumber=0; // pkt sequence number
