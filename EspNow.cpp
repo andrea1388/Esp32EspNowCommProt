@@ -27,16 +27,3 @@ bool EspNow::tx(const Msg &pp)
     pktnumber++;
     return true;
 }
-
-bool EspNow::txPanelTemp(float temp)
-{
-    union {
-        float f;
-        unsigned char bytes[sizeof(float)];
-    } u;
-    u.f=temp;
-    Msg p;
-    p.cmd=PANELTEMP;
-    p.setMsg(sizeof(float),u.bytes);
-    return tx(p);
-}
