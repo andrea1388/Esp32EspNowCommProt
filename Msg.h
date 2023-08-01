@@ -6,4 +6,5 @@ class Msg
         byte *data=0;
         setMsg(uint8_t cmd,uint8_t datalen, const void*data);
         ~Msg();
+        Msg& operator=(const Msg&);
 }

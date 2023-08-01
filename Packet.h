@@ -19,6 +19,7 @@ public:
     Msg msg;
     uint16_t crc;
     Packet();
+    Packet(const Packet&);
 };
 
 #endif /* Packet_h */
