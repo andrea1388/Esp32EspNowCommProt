@@ -1,21 +1,25 @@
 #include "Msg.h"
-Msg::setMsg(uint8_t cmd,uint8_t datalen, const void*_data)
+#include <cstdlib>
+#include <cstring>
+
+void Msg::setMsg(uint8_t cmd,uint8_t datalen, const void*_data)
 {
     len=datalen;
-    data=malloc(len);
+    data=(uint8_t*)malloc(len);
     memcpy(data,_data,datalen);
 }
 
-Msg &Msg::operator=(const Msg &m)
+Msg& Msg::operator=(const Msg &m)
 {
     // TODO: inserire l'istruzione return qui
-    data=malloc(m.len);
-    memcpy(data,m.data);
+    data=(uint8_t*)malloc(m.len);
+    memcpy(data,m.data,m.len);
     len=m.len;
     cmd=m.cmd;
+    return *this;
 }
 
-Msg::~Msg(uint8_t cmd,uint8_t datalen, const void*_data)
+Msg::~Msg()
 {
     if(data) free(data);
 }

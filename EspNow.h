@@ -2,12 +2,14 @@
 #define EspNow_h
 #include <vector>
 #include "Packet.h"
+#define MAXPKTSTOSENDSIZE 10
+#define NUMBEROFRETRANSMISSION 2
+
 using namespace std;
 class EspNow
 {
     public:
         void begin(uint8_t);
-        void cbNewMsg(void cbrx(const Msg& msg));
         bool tx(const Msg& msg);
     private:
         uint8_t nodeid; // node address

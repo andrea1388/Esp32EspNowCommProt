@@ -1,7 +1,7 @@
 #include "HomeNetwork.h"
 HomeNetwork::HomeNetwork(/* args */)
 {
-    espnow.cbNewMsg=newMsg;
+    //espnow.cbNewMsg=newMsg;
 }
 
 HomeNetwork::~HomeNetwork()
@@ -15,8 +15,7 @@ bool HomeNetwork::txPanelTemp(float temp)
         unsigned char bytes[sizeof(float)];
     } u;
     u.f=temp;
-    Msg p;
-    p.cmd=PANELTEMP;
-    p.setMsg(sizeof(float),u.bytes);
-    return espnow.tx(p);
+    Msg m;
+    m.setMsg(PANELTEMP,sizeof(float),u.bytes);
+    return espnow.tx(m);
 }
