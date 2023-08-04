@@ -11,11 +11,11 @@ private:
 public:
     EspNow espnow;
     
-    
     HomeNetwork(/* args */);
     ~HomeNetwork();
     void (*cbRxPanelTemp)(float);
     bool txPanelTemp(float);
+    void (*rxPanelTemp)(float);
     void newMsg(Msg&);
 };
 

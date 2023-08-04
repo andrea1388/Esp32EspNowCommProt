@@ -15,7 +15,7 @@ class EspNow
     private:
         uint8_t nodeid; // node address
         uint8_t pktnumber=0; // pkt sequence number
-
+        void (*cbNewMsg)(Msg&)=0;
         vector<Packet> receivedpackets;
 };
 #endif
