@@ -1,6 +1,7 @@
 #include "Msg.h"
 #include <cstdlib>
 #include <cstring>
+#include <iostream>
 
 void Msg::setMsg(uint8_t cmd,uint8_t datalen, const void*_data)
 {
@@ -9,9 +10,9 @@ void Msg::setMsg(uint8_t cmd,uint8_t datalen, const void*_data)
     memcpy(data,_data,datalen);
 }
 
+
 Msg& Msg::operator=(const Msg &m)
 {
-    // TODO: inserire l'istruzione return qui
     data=(uint8_t*)malloc(m.len);
     memcpy(data,m.data,m.len);
     len=m.len;
@@ -22,4 +23,5 @@ Msg& Msg::operator=(const Msg &m)
 Msg::~Msg()
 {
     if(data) free(data);
+    std::cout << "~Msg\n";
 }

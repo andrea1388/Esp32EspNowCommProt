@@ -8,5 +8,7 @@ Packet::Packet()
 Packet::Packet(const Packet &p)
 {
     sender=p.sender;
+    number=p.number;
+    txtime=p.txtime;
     msg=p.msg;
 }

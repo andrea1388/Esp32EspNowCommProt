@@ -18,9 +18,10 @@ bool EspNow::tx(const Msg &pp)
         p.sender=nodeid;
         p.number=pktnumber;
         p.retransmission=0;
-        p.msg.setMsg(pp.cmd,pp.len,pp.data);
+        //p.msg.setMsg(pp.cmd,pp.len,pp.data);
+        p.msg=pp;
         //p.txtime=now()+delay[i]+randomDelayInMs();
-        packetstosend.push_back(std::move(p));
+        packetstosend.push_back(p);
     }
     pktnumber++;
     return true;
