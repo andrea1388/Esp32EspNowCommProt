@@ -5,13 +5,10 @@
 class HomeNetwork
 {
 private:
-    /* data */
-    
+    EspNow& espnow;
 
-public:
-    EspNow espnow;
-    
-    HomeNetwork(/* args */);
+public:    
+    HomeNetwork(EspNow&);
     ~HomeNetwork();
     void (*cbRxPanelTemp)(float);
     bool txPanelTemp(float);

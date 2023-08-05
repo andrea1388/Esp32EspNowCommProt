@@ -1,6 +1,8 @@
 #include "HomeNetwork.h"
-HomeNetwork::HomeNetwork(/* args */)
+
+HomeNetwork::HomeNetwork(EspNow &e)
 {
+    espnow=e;
     espnow.cbNewMsg=newMsg;
 }
 

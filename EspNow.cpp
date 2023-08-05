@@ -5,6 +5,9 @@
 void EspNow::begin(uint8_t _nid)
 {
     nodeid=_nid;
+    ESP_ERROR_CHECK( esp_now_init() );
+    ESP_ERROR_CHECK( esp_now_register_send_cb(example_espnow_send_cb) );
+    ESP_ERROR_CHECK( esp_now_register_recv_cb(example_espnow_recv_cb) );
 }
 
 
