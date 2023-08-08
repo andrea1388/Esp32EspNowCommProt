@@ -1,13 +1,16 @@
 #include "EspNow.h"
 #include "Msg.h"
+#include "esp_err.h"
+#include "esp_now.h"
+
 #include <cstdint>
 
 void EspNow::begin(uint8_t _nid)
 {
     nodeid=_nid;
     ESP_ERROR_CHECK( esp_now_init() );
-    ESP_ERROR_CHECK( esp_now_register_send_cb(example_espnow_send_cb) );
-    ESP_ERROR_CHECK( esp_now_register_recv_cb(example_espnow_recv_cb) );
+    ESP_ERROR_CHECK( esp_now_register_send_cb(send_cb) );
+    ESP_ERROR_CHECK( esp_now_register_recv_cb(recv_cb) );
 }
 
 
@@ -28,4 +31,15 @@ bool EspNow::tx(const Msg &pp)
     }
     pktnumber++;
     return true;
+}
+
+void txWorker()
+{
+    for(Packet &p: packetstosend)
+    {
+        if(timetosend)
+        {
+            esp_now_send(perradd,p.tobuffer,p.lenght);
+        }
+    }
 }
